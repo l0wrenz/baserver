@@ -3,13 +3,14 @@ from datetime import datetime
 import json
 
 app = Flask(__name__)
-i = 0
+number_of_planes = 5
+plane_speed = 10
+darkness = False
 
-@app.route("/")
+@app.route("/info")
 def hello_world():
-    global i
-    i += 1
-    return json.dumps({"data": str(i)})
+    global number_of_planes, plane_speed, darkness
+    return json.dumps({"number_of_planes": number_of_planes, "plane_speed": plane_speed, "darkness": False})
 
 @app.route("/post_pulse_data", methods=['POST'])
 def get_post():
