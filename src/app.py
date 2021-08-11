@@ -79,7 +79,7 @@ def post_game_data():
 
     with open(f"data/game_data{str(id)}.json", "r+") as f:
         try:
-            file_len = os.path.getsize(f"data/game_data{str(id)}.json")
+            file_len = os.path.getsize(f"/code/data/game_data{str(id)}.json")
             print(file_len, file=sys.stderr)
 
             if (file_len > 0):
