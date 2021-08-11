@@ -1,7 +1,7 @@
 from flask import Flask, request
 from datetime import datetime
 import json
-
+import sys
 
 app = Flask(__name__)
 number_of_planes = 5
@@ -40,13 +40,14 @@ def post_pulse_data():
     global id
 
     request_data = request.data
+    print(request_data)
     data_dict = json.loads(request_data)
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
     data = []
     
-    with open(f"data/game_data{str(id)}.json", "w+") as f:
+    with open(f"data/game_data{str(id)}.json", "w") as f:
         print("sad")
 
     with open(f"data/pulse_data{str(id)}.json", "r") as f:
@@ -66,7 +67,7 @@ def post_game_data():
 
     data = request.data
     data_dict = json.loads(data)
-    print(data_dict)
+    print(data_dict, file=sys.stdout)
 
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
