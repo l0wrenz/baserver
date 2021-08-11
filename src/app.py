@@ -82,9 +82,8 @@ def post_game_data():
             raw_data = f.read()
             json_decoded = json.loads(raw_data)
             print(json_decoded, file=sys.stderr)
-            new_data = json_decoded.append(data_dict.copy())
-            print(new_data, file=sys.stderr)
-
+            json_decoded.append(data_dict.copy())
+            print(json_decoded, file=sys.stderr)
             # json.dump(new_data, f)
         except Exception as e:
             print(e, file=sys.stderr)
@@ -98,4 +97,4 @@ def startupCheck(path):
     else:
         print ("Either file is missing or is not readable, creating file...")
         with io.open(path, 'w') as db_file:
-            db_file.write(json.dumps([]))
+            db_file.write(json.dumps("[]"))
