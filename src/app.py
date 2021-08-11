@@ -81,10 +81,10 @@ def post_game_data():
         raw_data = f.read()
         if raw_data: 
             print("data is already there", file=sys.stderr)
-            data = data.append(json.loads(raw_data))
+            data.append(json.loads(raw_data))
 
     with open(f"data/game_data{str(id)}.json", "a+") as f:
-        data = data.append(data_dict)
+        data.append(data_dict)
         print(data + " " + data_dict, file=sys.stderr)
         f.write(json.dumps(data))
 
