@@ -79,9 +79,9 @@ def post_game_data():
 
     with open(f"data/game_data{str(id)}.json", "r") as f:
         try:
-            raw_data = f.read()
-            print(json.loads(raw_data), file=sys.stderr)
-            data = data + json.loads(raw_data)
+            raw_data = json.load(f)
+            print(raw_data, file=sys.stderr)
+            data = data + raw_data
         except Exception as e:
             print(e, file=sys.stderr)
 
