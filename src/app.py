@@ -97,4 +97,4 @@ def startupCheck(path):
     else:
         print ("Either file is missing or is not readable, creating file...")
         with io.open(path, 'w') as db_file:
-            db_file.write(json.dumps("[]"))
+            db_file.write(json.dumps([]))
