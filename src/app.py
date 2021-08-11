@@ -82,13 +82,13 @@ def post_game_data():
             raw_data = f.read()
             json_decoded = json.loads(raw_data)
             new_data = json_decoded
+            data.append(new_data)
         except Exception as e:
             print(e, file=sys.stderr)
 
-    data = new_data
-
-    with open(f"data/game_data{str(id)}.json", "a+") as f:
+    with open(f"data/game_data{str(id)}.json", "w") as f:
         try:
+            print("DATA :::: ")
             print(data, file=sys.stderr)
             data.append(data_dict)
             f.write(json.dumps(data))
