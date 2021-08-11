@@ -50,7 +50,8 @@ def post_pulse_data():
         print("test")
 
     with open(f"data/pulse_data{str(id)}.json", "r+") as f:
-        data.append(json.loads(f.read()))
+        raw_data = f.read()
+        if raw_data: data.append(json.loads(raw_data))
 
     with open(f"data/pulse_data{str(id)}.json", "a+") as f:
         f.write(json.dumps(data.append(data_dict)))
@@ -75,7 +76,9 @@ def post_game_data():
         print("test")
 
     with open(f"data/game_data{str(id)}.json", "r+") as f:
-        data.append(json.loads(f.read()))
+        raw_data = f.read()
+        if raw_data: data.append(json.loads(raw_data))
+
 
     with open(f"data/game_data{str(id)}.json", "a+") as f:
         f.write(json.dumps(data.append(data_dict)))
