@@ -72,6 +72,7 @@ def post_game_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
+    data = []
     
     with open(f"data/game_data{str(id)}.json", "w+") as f:
         print("sad")
@@ -84,12 +85,13 @@ def post_game_data():
         except Exception as e:
             print(e, file=sys.stderr)
 
+    data = new_data
+
     with open(f"data/game_data{str(id)}.json", "a+") as f:
         try:
-            print(new_data, file=sys.stderr)
-            new_data.append(data_dict)
-            print(new_data, file=sys.stderr)
-            f.write(json.dumps(new_data))
+            print(data, file=sys.stderr)
+            data.append(data_dict)
+            f.write(json.dumps(data))
         except Exception as e:
             print(e, file=sys.stderr)
 
