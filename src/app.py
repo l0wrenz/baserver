@@ -38,29 +38,31 @@ def switch_id():
 
 @app.route("/post_pulse_data", methods=['POST'])
 def post_pulse_data():
-
+    
     global id
 
-    request_data = request.data
-    print(request_data)
-    data_dict = json.loads(request_data)
+    req_data = request.data
+    data_dict = json.loads(req_data)
+
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
-    data = []
-    
-    with open(f"data/game_data{str(id)}.json", "w") as f:
-        print("sad")
+    path = f"data/pulse_data{str(id)}.json"
+    startupCheck(path)
 
-    with open(f"data/pulse_data{str(id)}.json", "r") as f:
-        raw_data = f.read()
-        if raw_data: data.append(json.loads(raw_data))
+    with open(path, "r+") as f:
+        try:
+            json_decoded = json.load(f)
+            print(json_decoded, file=sys.stderr)
+            json_decoded.append(data_dict.copy())
+            print(json_decoded, file=sys.stderr)
 
-    with open(f"data/pulse_data{str(id)}.json", "a+") as f:
-        f.write(json.dumps(data.append(data_dict)))
-
+            with open(path, 'w') as outfile:
+                json.dump(json_decoded, outfile, indent=4)
+                # sort_keys, indent are optional and used for pretty-write 
+        except Exception as e:
+            print(e, file=sys.stderr)
     return ""
-
 
 @app.route("/post_game_data", methods=['POST'])
 def post_game_data():
