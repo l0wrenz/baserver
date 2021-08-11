@@ -64,6 +64,9 @@ def post_game_data():
     data_dict["id"] = id
     data = []
 
+    with open(f"data/game_data{str(id)}.json", "w+") as f:
+        print("test")
+
     with open(f"data/game_data{str(id)}.json", "r+") as f:
         data.append(json.loads(f))
 
