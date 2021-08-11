@@ -74,17 +74,18 @@ def post_game_data():
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
     path = f"data/game_data{str(id)}.json"
-
     startupCheck(path)
 
     with open(path, "r+") as f:
         try:
-            raw_data = f.read()
-            json_decoded = json.loads(raw_data)
+            json_decoded = json.load(f)
             print(json_decoded, file=sys.stderr)
             json_decoded.append(data_dict.copy())
             print(json_decoded, file=sys.stderr)
-            json.dump(json_decoded, f)
+
+            with open('path', 'w') as outfile:
+                json.dump(json_decoded, outfile, indent=4)
+                # sort_keys, indent are optional and used for pretty-write 
         except Exception as e:
             print(e, file=sys.stderr)
     return ""
@@ -93,8 +94,8 @@ def post_game_data():
 def startupCheck(path):
     if os.path.isfile(path) and os.access(path, os.R_OK):
         # checks if file exists
-        print ("File exists and is readable")
+        print ("File exists and is readable", file=sys.stderr)
     else:
-        print ("Either file is missing or is not readable, creating file...")
+        print ("Either file is missing or is not readable, creating file...", file=sys.stderr)
         with io.open(path, 'w') as db_file:
             db_file.write(json.dumps([]))
