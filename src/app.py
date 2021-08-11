@@ -83,7 +83,7 @@ def post_game_data():
             json_decoded.append(data_dict.copy())
             print(json_decoded, file=sys.stderr)
 
-            with open('path', 'w') as outfile:
+            with open(path, 'w') as outfile:
                 json.dump(json_decoded, outfile, indent=4)
                 # sort_keys, indent are optional and used for pretty-write 
         except Exception as e:
