@@ -45,6 +45,9 @@ def post_pulse_data():
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
     data = []
+    
+    with open(f"data/game_data{str(id)}.json", "w+") as f:
+        print("sad")
 
     with open(f"data/pulse_data{str(id)}.json", "r") as f:
         raw_data = f.read()
@@ -69,6 +72,9 @@ def post_game_data():
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
     data = []
+    
+    with open(f"data/game_data{str(id)}.json", "w+") as f:
+        print("sad")
 
     with open(f"data/game_data{str(id)}.json", "r") as f:
         raw_data = f.read()
