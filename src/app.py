@@ -39,15 +39,22 @@ def post_pulse_data():
 
     global id
 
-    data = request.data
-    string_data = json.loads(data)
+    request_data = request.data
+    data_dict = json.loads(request_data)
     now = datetime.now()
-    string_data["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
-    string_data["id"] = id
+    data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
+    data_dict["id"] = id
+    data = []
+    
+    with open(f"data/pulse_data{str(id)}.json", "w+") as f:
+        print("test")
 
-    with open(f"data/pulse_data{id}.json", "a+") as f:
-        f.write(json.dumps(string_data))
-        f.write("\n")
+    with open(f"data/pulse_data{str(id)}.json", "r+") as f:
+        data.append(json.loads(f.read()))
+
+    with open(f"data/pulse_data{str(id)}.json", "a+") as f:
+        f.write(json.dumps(data.append(data_dict)))
+
     return ""
 
 
@@ -68,7 +75,7 @@ def post_game_data():
         print("test")
 
     with open(f"data/game_data{str(id)}.json", "r+") as f:
-        data.append(json.loads(f))
+        data.append(json.loads(f.read()))
 
     with open(f"data/game_data{str(id)}.json", "a+") as f:
         f.write(json.dumps(data.append(data_dict)))
