@@ -2,6 +2,7 @@ from flask import Flask, request
 from datetime import datetime
 import json
 import sys
+import os
 
 app = Flask(__name__)
 number_of_planes = 5
@@ -71,18 +72,24 @@ def post_game_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
-    data = []
+    data = [data_dict]
     
     with open(f"data/game_data{str(id)}.json", "w+") as f:
         print("sad")
 
     with open(f"data/game_data{str(id)}.json", "r+") as f:
         try:
-            raw_data = f.read()
-            json_decoded = json.loads(raw_data)
-            # old_data = json_decoded
-            # data = old_data + data
-            print(json_decoded, file=sys.stderr)
+            file_len = os.path.getsize(f"data/game_data{str(id)}.json")
+            print(file_len, file=sys.stderr)
+
+            if (file_len > 0):
+                raw_data = f.read()
+                print(len(raw_data))
+                json_decoded = json.loads(raw_data)
+                print(json_decoded, file=sys.stderr)
+            else:
+                print(data, file=sys.stderr)
+                f.write(json.dumps(data))
 
         except Exception as e:
             print(e, file=sys.stderr)
