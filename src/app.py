@@ -84,7 +84,7 @@ def post_game_data():
             print(json_decoded, file=sys.stderr)
             json_decoded.append(data_dict.copy())
             print(json_decoded, file=sys.stderr)
-            # json.dump(new_data, f)
+            json.dump(json_decoded, f)
         except Exception as e:
             print(e, file=sys.stderr)
     return ""
