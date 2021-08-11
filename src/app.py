@@ -84,6 +84,8 @@ def post_game_data():
             data.append(json.loads(raw_data))
 
     with open(f"data/game_data{str(id)}.json", "a+") as f:
-        f.write(json.dumps(data.append(data_dict)))
+        data = data.append(data_dict)
+        print(data, file=sys.stderr)
+        f.write(json.dumps(data))
 
-    return data
+    return ""
