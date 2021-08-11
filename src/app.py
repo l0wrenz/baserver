@@ -78,8 +78,9 @@ def post_game_data():
         print("sad")
 
     with open(f"data/game_data{str(id)}.json", "r") as f:
-        f.seek(0)
         raw_data = f.read()
+        print("raw_data", file=sys.stderr)
+
         if len(raw_data) > 0: 
             print("data is already there", file=sys.stderr)
             data = data + json.loads(raw_data)
