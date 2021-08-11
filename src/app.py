@@ -35,7 +35,7 @@ def switch_id():
     return ""
 
 @app.route("/post_pulse_data", methods=['POST'])
-def get_post():
+def post_pulse_data():
 
     global id
 
@@ -52,7 +52,7 @@ def get_post():
 
 
 @app.route("/post_game_data", methods=['POST'])
-def get_post():
+def post_game_data():
     
     global id
 
