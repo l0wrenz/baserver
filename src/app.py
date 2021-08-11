@@ -63,6 +63,7 @@ def post_game_data():
 
     data = request.data
     data_dict = json.loads(data)
+    print(data_dict)
 
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
