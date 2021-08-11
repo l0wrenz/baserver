@@ -3,6 +3,7 @@ from datetime import datetime
 import json
 import sys
 import os
+import io
 
 app = Flask(__name__)
 number_of_planes = 5
@@ -74,24 +75,26 @@ def post_game_data():
     data_dict["id"] = id
     data = [data_dict]
     path = f"data/game_data{str(id)}.json"
-    file_len = os.path.getsize(path)
 
-    with open(path, "w") as f:
-        print("sad")
+    startupCheck(path)
 
     with open(path, "r+") as f:
         try:
-            print(file_len, file=sys.stderr)
-
-            if (file_len > 0):
-                raw_data = f.read()
-                print(len(raw_data))
-                json_decoded = json.loads(raw_data)
-                print(json_decoded, file=sys.stderr)
-            else:
-                print(data, file=sys.stderr)
-                f.write(json.dumps(data))
-
+            raw_data = f.read()
+            json_decoded = json.loads(raw_data)
+            print(json_decoded, file=sys.stderr)
+            new_data = data + json_decoded
+            json.dump(new_data, f)
         except Exception as e:
             print(e, file=sys.stderr)
     return ""
+
+
+def startupCheck(path):
+    if os.path.isfile(path) and os.access(path, os.R_OK):
+        # checks if file exists
+        print ("File exists and is readable")
+    else:
+        print ("Either file is missing or is not readable, creating file...")
+        with io.open(path, 'w') as db_file:
+            db_file.write(json.dumps([{}]))
