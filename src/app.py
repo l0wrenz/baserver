@@ -65,8 +65,8 @@ def post_game_data():
     
     global id
 
-    data = request.data
-    data_dict = json.loads(data)
+    req_data = request.data
+    data_dict = json.loads(req_data)
     print(data_dict, file=sys.stderr)
 
     now = datetime.now()
@@ -79,11 +79,8 @@ def post_game_data():
 
     with open(f"data/game_data{str(id)}.json", "r") as f:
         raw_data = f.read()
-        print("raw_data", file=sys.stderr)
-
-        if len(raw_data) > 0: 
-            print("data is already there", file=sys.stderr)
-            data = data + json.loads(raw_data)
+        print(json.loads(raw_data), file=sys.stderr)
+        data = data + json.loads(raw_data)
 
     with open(f"data/game_data{str(id)}.json", "a+") as f:
         data.append(data_dict)
