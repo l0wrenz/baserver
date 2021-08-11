@@ -73,7 +73,6 @@ def post_game_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
-    data = [data_dict]
     path = f"data/game_data{str(id)}.json"
 
     startupCheck(path)
@@ -83,8 +82,8 @@ def post_game_data():
             raw_data = f.read()
             json_decoded = json.loads(raw_data)
             print(json_decoded, file=sys.stderr)
-            new_data = data + json_decoded
-            print(json_decoded, file=sys.stderr)
+            new_data = json_decoded.append(data_dict.copy())
+            print(new_data, file=sys.stderr)
 
             # json.dump(new_data, f)
         except Exception as e:
@@ -99,4 +98,4 @@ def startupCheck(path):
     else:
         print ("Either file is missing or is not readable, creating file...")
         with io.open(path, 'w') as db_file:
-            db_file.write(json.dumps([{}]))
+            db_file.write(json.dumps([]))
