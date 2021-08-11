@@ -67,7 +67,6 @@ def post_game_data():
 
     req_data = request.data
     data_dict = json.loads(req_data)
-    print(data_dict, file=sys.stderr)
 
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
@@ -81,9 +80,9 @@ def post_game_data():
         try:
             raw_data = f.read()
             json_decoded = json.loads(raw_data)
-            old_data = json_decoded
-            data = old_data + data
-            print(data, file=sys.stderr)
+            # old_data = json_decoded
+            # data = old_data + data
+            print(json_decoded, file=sys.stderr)
 
         except Exception as e:
             print(e, file=sys.stderr)
