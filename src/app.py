@@ -67,7 +67,7 @@ def post_pulse_data():
 @app.route("/post_score", methods=['POST'])
 def post_game_data():
     
-    global id
+    global id, number_of_planes, plane_speed, darkness
 
     req_data = request.form
     print(req_data)
@@ -76,6 +76,12 @@ def post_game_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["crashes"] = req_data["crashes"]
+    data_dict["wrong_airport_score"] = req_data["wrong_airport_score"]
+    data_dict["correct"] = req_data["correct"]
+    data_dict["number_of_planes"] = number_of_planes
+    data_dict["plane_speed"] = plane_speed
+    data_dict["darkness"] = darkness
+
     path = f"data/game_data_id_{str(id)}.json"
     startupCheck(path)
 
