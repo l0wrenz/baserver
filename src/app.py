@@ -47,7 +47,7 @@ def post_pulse_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
-    path = f"data/pulse_data{str(id)}.json"
+    path = f"data/pulse_data_id_{str(id)}.json"
     startupCheck(path)
 
     with open(path, "r+") as f:
@@ -64,18 +64,19 @@ def post_pulse_data():
             print(e, file=sys.stderr)
     return ""
 
-@app.route("/post_game_data", methods=['POST'])
+@app.route("/post_score", methods=['POST'])
 def post_game_data():
     
     global id
 
-    req_data = request.data
+    req_data = request.form
+    print(req_data)
     data_dict = json.loads(req_data)
 
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
-    data_dict["id"] = id
-    path = f"data/game_data{str(id)}.json"
+    data_dict["crashes"] = req_data["crashes"]
+    path = f"data/game_data_id_{str(id)}.json"
     startupCheck(path)
 
     with open(path, "r+") as f:
