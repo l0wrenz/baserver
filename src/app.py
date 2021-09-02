@@ -33,7 +33,7 @@ def handle_form():
     plane_speed = int(data["plane_speed"])
     darkness = data["darkness"]
     print(darkness, file=sys.stderr)
-    if darkness == "On":
+    if darkness == "1":
         darkness = True
     else:
         darkness = False
