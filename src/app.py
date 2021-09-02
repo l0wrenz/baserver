@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template, redirect, url_for
 from datetime import datetime
 import json
 import sys
@@ -11,10 +11,34 @@ plane_speed = 10
 darkness = False
 id = 0
 
+
 @app.route("/info")
 def hello_world():
     global number_of_planes, plane_speed, darkness
     return json.dumps({"number_of_planes": number_of_planes, "plane_speed": plane_speed, "darkness": darkness})
+
+
+@app.route("/settings")
+def settings():
+    return render_template("index.html")
+
+
+@app.route("/handle_form", methods=["POST"])
+def handle_form():
+    global number_of_planes, plane_speed, darkness
+    data = request.form
+
+    number_of_planes = int(data["number_of_planes"])
+    plane_speed = int(data["plane_speed"])
+    darkness = data["darkness"]
+    if darkness == "on":
+        darkness = True
+    else:
+        darkness = False
+
+    print(plane_speed, file=sys.stderr)
+    return redirect(url_for("settings"))
+
 
 @app.route("/switch_difficulty", methods=['POST'])
 def switch_difficulty():
@@ -28,6 +52,7 @@ def switch_difficulty():
 
     return ""
 
+
 @app.route("/switch_id", methods=['POST'])
 def switch_id():
     global id
@@ -36,9 +61,10 @@ def switch_id():
     id = data_dict["id"]
     return ""
 
+
 @app.route("/post_pulse_data", methods=['POST'])
 def post_pulse_data():
-    
+
     global id
 
     req_data = request.data
@@ -59,14 +85,15 @@ def post_pulse_data():
 
             with open(path, 'w') as outfile:
                 json.dump(json_decoded, outfile, indent=4)
-                # sort_keys, indent are optional and used for pretty-write 
+                # sort_keys, indent are optional and used for pretty-write
         except Exception as e:
             print(e, file=sys.stderr)
     return ""
 
+
 @app.route("/post_score", methods=['POST'])
 def post_game_data():
-    
+
     global id, number_of_planes, plane_speed, darkness
 
     req_data = request.form
@@ -94,7 +121,7 @@ def post_game_data():
 
             with open(path, 'w') as outfile:
                 json.dump(json_decoded, outfile, indent=4)
-                # sort_keys, indent are optional and used for pretty-write 
+                # sort_keys, indent are optional and used for pretty-write
         except Exception as e:
             print(e, file=sys.stderr)
     return ""
@@ -103,8 +130,9 @@ def post_game_data():
 def startupCheck(path):
     if os.path.isfile(path) and os.access(path, os.R_OK):
         # checks if file exists
-        print ("File exists and is readable", file=sys.stderr)
+        print("File exists and is readable", file=sys.stderr)
     else:
-        print ("Either file is missing or is not readable, creating file...", file=sys.stderr)
+        print(
+            "Either file is missing or is not readable, creating file...", file=sys.stderr)
         with io.open(path, 'w') as db_file:
             db_file.write(json.dumps([]))
