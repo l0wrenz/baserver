@@ -1,11 +1,9 @@
 <form action="{{ url_for('handle_form') }}" method="POST">
-    <input type='hidden' value='0' name='darkness'>
-    <label for="n_planes">Number of planes: {{number_of_planes}}</label><br>
+    <label for="n_planes">Number of planes:</label><br>
     <input type="number" id="number_of_planes" name="number_of_planes" max="300" required><br>
     <label for="plane_speed">Plane speed:  {{plane_speed}}</label><br>
     <input type="number" id="plane_speed" name="plane_speed" max="100" required><br>
-    <label for="darkness">Darkness:  {{darkness}}</label>
-    <input type="checkbox" id="darkness" name="darkness"><br>
-
+    <label for="darkness">Darkness:</label>
+    <input type="hidden" name="darkness" value="0"><input type="checkbox" onclick="this.previousSibling.value=1-this.previousSibling.value">
     <input type="submit" name="difficulty" value="Set difficulty">
 </form>

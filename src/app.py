@@ -32,12 +32,13 @@ def handle_form():
     number_of_planes = int(data["number_of_planes"])
     plane_speed = int(data["plane_speed"])
     darkness = data["darkness"]
-    if darkness == "on":
+    print(darkness, file=sys.stderr)
+    if darkness == "On":
         darkness = True
     else:
         darkness = False
 
-    print(plane_speed, file=sys.stderr)
+    print(darkness, file=sys.stderr)
     return redirect(url_for("settings"))
 
 
