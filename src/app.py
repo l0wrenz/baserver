@@ -20,7 +20,8 @@ def hello_world():
 
 @app.route("/settings")
 def settings():
-    return render_template("index.html")
+    global number_of_planes, plane_speed, darkness
+    return render_template("index.html", number_of_planes=number_of_planes, plane_speed=plane_speed,darkness=darkness)
 
 
 @app.route("/handle_form", methods=["POST"])
