@@ -98,7 +98,7 @@ def post_pulse_data():
             print(e, file=sys.stderr)
 
     data = data_dict["data"]["new_arr"]
-    timediff = data_dict["timediff"]
+    timediff = data_dict["data"]["timediff"]
     working_data, measures = hp.process(
         data, hp.get_samplerate_mstimer(timediff))
     plot_object = hp.plotter(working_data, measures, show=False)
