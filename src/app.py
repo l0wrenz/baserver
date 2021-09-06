@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template, redirect, url_for
+from flask import Flask, request, render_template, redirect, url_for, send_file
+import heartpy as hp
 from datetime import datetime
 import json
 import sys
@@ -12,6 +13,11 @@ darkness = False
 id = 0
 
 
+@app.route('/get_image')
+def get_image():
+    return send_file("heart_plot.jpg", mimetype='image/jpeg')
+
+
 @app.route("/info")
 def hello_world():
     global number_of_planes, plane_speed, darkness
@@ -21,7 +27,7 @@ def hello_world():
 @app.route("/settings")
 def settings():
     global number_of_planes, plane_speed, darkness
-    return render_template("index.html", number_of_planes=number_of_planes, plane_speed=plane_speed,darkness=darkness)
+    return render_template("index.html", number_of_planes=number_of_planes, plane_speed=plane_speed, darkness=darkness)
 
 
 @app.route("/handle_form", methods=["POST"])
@@ -90,6 +96,15 @@ def post_pulse_data():
                 # sort_keys, indent are optional and used for pretty-write
         except Exception as e:
             print(e, file=sys.stderr)
+
+    data = data_dict["new_arr"]
+    timediff = data_dict["timediff"]
+    working_data, measures = hp.process(
+        data, hp.get_samplerate_mstimer(timediff))
+    plot_object = hp.plotter(working_data, measures, show=False)
+
+    plot_object.savefig('heart_plot.jpg')
+
     return ""
 
 
