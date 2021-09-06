@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:latest
 WORKDIR /code
-RUN apk add --no-cache gcc musl-dev linux-headers
 RUN apt-get update \
     && apt-get install -y python3-pip python3-dev \
     && cd /usr/local/bin \
