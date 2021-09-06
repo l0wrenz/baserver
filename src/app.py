@@ -97,7 +97,7 @@ def post_pulse_data():
         except Exception as e:
             print(e, file=sys.stderr)
 
-    data = data_dict["new_arr"]
+    data = data_dict["data"]["new_arr"]
     timediff = data_dict["timediff"]
     working_data, measures = hp.process(
         data, hp.get_samplerate_mstimer(timediff))
