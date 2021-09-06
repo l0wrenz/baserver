@@ -100,7 +100,7 @@ def post_pulse_data():
     data = data_dict["data"]["new_arr"]
     timediff = data_dict["data"]["timediff"]
     working_data, measures = hp.process(
-        data, hp.get_samplerate_mstimer(timediff))
+        data, timediff/len(data))
     plot_object = hp.plotter(working_data, measures, show=False)
 
     plot_object.savefig('heart_plot.jpg')
