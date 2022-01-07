@@ -10,7 +10,9 @@ app = Flask(__name__)
 number_of_planes = 5
 plane_speed = 10
 darkness = False
+paused = True
 id = 0
+infoText = "Bitte warten"
 
 
 @app.route('/get_image')
@@ -20,8 +22,8 @@ def get_image():
 
 @app.route("/info")
 def hello_world():
-    global number_of_planes, plane_speed, darkness
-    return json.dumps({"number_of_planes": number_of_planes, "plane_speed": plane_speed, "darkness": darkness})
+    global number_of_planes, plane_speed, darkness, paused
+    return json.dumps({"number_of_planes": number_of_planes, "plane_speed": plane_speed, "darkness": darkness, "paused": paused, "info_text": infoText})
 
 
 @app.route("/settings")
@@ -50,13 +52,15 @@ def handle_form():
 
 @app.route("/switch_difficulty", methods=['POST'])
 def switch_difficulty():
-    global number_of_planes, plane_speed, darkness
+    global number_of_planes, plane_speed, darkness, paused, infoText
     data = request.data
     data_dict = json.loads(data)
 
     number_of_planes = data_dict["number_of_planes"]
     plane_speed = data_dict["plane_speed"]
     darkness = data_dict["darkness"]
+    paused = data_dict["paused"]
+    infoText = data_dict["info_text"]
 
     return ""
 
