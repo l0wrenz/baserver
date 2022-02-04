@@ -13,6 +13,7 @@ darkness = False
 paused = True
 id = 0
 infoText = "Bitte warten"
+state = ""
 
 
 @app.route('/get_image')
@@ -52,7 +53,7 @@ def handle_form():
 
 @app.route("/switch_difficulty", methods=['POST'])
 def switch_difficulty():
-    global number_of_planes, plane_speed, darkness, paused, infoText
+    global number_of_planes, plane_speed, darkness, paused, infoText, state
     data = request.data
     data_dict = json.loads(data)
 
@@ -77,7 +78,7 @@ def switch_id():
 @app.route("/post_pulse_data", methods=['POST'])
 def post_pulse_data():
 
-    global id
+    global id, state
 
     req_data = request.data
     data_dict = json.loads(req_data)
@@ -85,6 +86,7 @@ def post_pulse_data():
     now = datetime.now()
     data_dict["date"] = now.strftime("%d-%m-%Y (%H:%M:%S.%f)")
     data_dict["id"] = id
+    data_dict["state"] = state
     path = f"data/pulse_data_id_{str(id)}.json"
     startupCheck(path)
 
